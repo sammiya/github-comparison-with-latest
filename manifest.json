@@ -1,0 +1,6 @@
+{
+  "name": "github-comparison-with-latest",
+  "version": "0.1.0",
+  "manifest_version": 3,
+  "description": "Make it easy to obtain a URL that compares a commit in a particular pull request with the most recent commit in that request"
+}
