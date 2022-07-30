@@ -5,9 +5,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "lint": "prettier --write .",
     "preview": "vite preview"
   },
   "devDependencies": {
+    "prettier": "^2.7.1",
     "typescript": "^4.5.4",
     "vite": "^2.9.0"
   }
