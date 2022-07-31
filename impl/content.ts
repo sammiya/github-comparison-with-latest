@@ -1,26 +1,58 @@
-const isTargetUrl = () => {
-  // unimplemented
-  return true;
+type RepositoryParams = {
+  owner: string;
+  repo: string;
 };
+
+const getRepositoryParamsIfValidUrl = (
+  url: string
+): RepositoryParams | undefined => {
+  const match = url.match(
+    /^https:\/\/github.com\/([^/]+)\/([^/]+)\/pull\/\d+$/
+  );
+  if (!match) return;
+
+  const [owner, repo] = match.slice(1);
+  return {
+    owner,
+    repo,
+  };
+};
+
+const buildCompareUrl = (
+  { owner, repo }: RepositoryParams,
+  from: string,
+  to: string
+) => `https://github.com/${owner}/${repo}/compare/${from}...${to}`;
 
 const getCurrentBranchName = () => {
   const currentBranchElement = document
     .getElementById("partial-discussion-header")
     ?.querySelector(".gh-header-meta")
     ?.getElementsByClassName("commit-ref")?.[1];
-  if (typeof currentBranchElement != "object") return;
-  const { innerText } = currentBranchElement as { innerText?: unknown };
-  if (typeof innerText !== "string") return;
-  return innerText;
+  if (!(currentBranchElement instanceof HTMLElement)) return;
+
+  return currentBranchElement.innerText;
 };
 
 const content = () => {
-  if (!isTargetUrl()) return;
+  const repositoryParams = getRepositoryParamsIfValidUrl(window.location.href);
+  if (!repositoryParams) return;
 
   const currentBranchName = getCurrentBranchName();
   if (!currentBranchName) return;
 
-  console.log(`Okay, detected current branch name: ${currentBranchName}`);
+  document
+    .querySelectorAll<HTMLElement>(
+      "div.TimelineItem-badge + div .Details .d-flex.flex-auto > div.text-right.ml-1"
+    )
+    .forEach((commitHashDom) => {
+      const url = buildCompareUrl(
+        repositoryParams,
+        commitHashDom.innerText,
+        currentBranchName
+      );
+      commitHashDom.insertAdjacentHTML("beforeend", `<a href='${url}'>!</a>`);
+    });
 };
 
 export default content;
