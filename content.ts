@@ -1,3 +1,6 @@
 import content from "./impl/content";
 
-content();
+chrome.runtime.onMessage.addListener((request, _sender, _sendResponse) => {
+  if (request !== "complete") return;
+  content();
+});

@@ -5,8 +5,14 @@
   "description": "Make it easy to obtain a URL that compares a commit in a particular pull request with the most recent commit in that request",
   "content_scripts": [
     {
-      "matches": ["https://github.com/*/*/pull/*"],
-      "js": ["content.ts"]
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.ts"],
+      "run_at": "document_start"
     }
-  ]
+  ],
+  "permissions": ["tabs"],
+  "background": {
+    "service_worker": "background.ts",
+    "type": "module"
+  }
 }
