@@ -25,11 +25,9 @@ const buildCompareUrl = (
 ) => `https://github.com/${owner}/${repo}/compare/${from}...${to}`;
 
 const getCurrentBranchName = () => {
-  const currentBranchElement = document
-    .getElementById("partial-discussion-header")
-    ?.querySelector(".gh-header-meta")
-    ?.getElementsByClassName("commit-ref")?.[1];
-  if (!(currentBranchElement instanceof HTMLElement)) return;
+  const currentBranchElement = document.querySelectorAll<HTMLElement>(
+    "#partial-discussion-header .gh-header-meta .commit-ref"
+  )?.[1];
 
   return currentBranchElement.innerText;
 };
