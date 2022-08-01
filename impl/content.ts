@@ -28,6 +28,7 @@ const getCurrentBranchName = () => {
   const currentBranchElement = document.querySelectorAll<HTMLElement>(
     "#partial-discussion-header .gh-header-meta .commit-ref"
   )?.[1];
+  if (currentBranchElement == null) return;
 
   return currentBranchElement.innerText;
 };
