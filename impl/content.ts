@@ -45,13 +45,16 @@ const content = () => {
     .querySelectorAll<HTMLElement>(
       "div.TimelineItem-badge + div .Details .d-flex.flex-auto > div.text-right.ml-1"
     )
-    .forEach((commitHashDom) => {
+    .forEach((commitHashElement) => {
       const url = buildCompareUrl(
         repositoryParams,
-        commitHashDom.innerText,
+        commitHashElement.innerText,
         currentBranchName
       );
-      commitHashDom.insertAdjacentHTML("beforeend", `<a href='${url}'>!</a>`);
+      commitHashElement.insertAdjacentHTML(
+        "beforeend",
+        `<a href='${url}'>!</a>`
+      );
     });
 };
 
